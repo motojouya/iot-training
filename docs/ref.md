@@ -1,0 +1,16 @@
+https://aws.amazon.com/jp/builders-flash/202006/amplify-hygrothermograph
+https://aws.amazon.com/jp/blogs/news/build-your-pool-water-temperature-monitoring-solution-with-aws/
+https://docs.aws.amazon.com/ja_jp/iot/latest/developerguide/iot-moisture-tutorial.html
+https://tech.gmogshd.com/raspberrypi-and-awsiot/
+https://iatom.hatenablog.com/entry/2020/12/27/161045
+https://docs.aws.amazon.com/ja_jp/prescriptive-guidance/latest/patterns/cost-effectively-ingest-iot-data-directly-into-amazon-s3-using-aws-iot-greengrass.html
+https://dev.classmethod.jp/articles/shun231002/
+https://awsiot-handson-dojo-basic-ble.readthedocs.io/en/latest/05.html
+https://docs.aws.amazon.com/ja_jp/AmazonRDS/latest/UserGuide/USER_PostgreSQL.S3Import.html
+https://docs.aws.amazon.com/ja_jp/greengrass/v1/developerguide/stream-manager.html
+https://docs.aws.amazon.com/ja_jp/greengrass/v1/developerguide/setup-filter.rpi.html
+https://blog.akanumahiroaki.com/entry/2017/12/22/080000
+https://note.com/imaimai/n/nc1841b2d579f
+https://dev.classmethod.jp/articles/greengrass-v2-stream-manager-to-s3/
+https://qiita.com/hdmn54321/items/e10990014620d674d3ec
+https://docs.aws.amazon.com/ja_jp/firehose/latest/dev/record-format-conversion.html

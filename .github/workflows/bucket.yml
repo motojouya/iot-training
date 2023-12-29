@@ -1,0 +1,50 @@
+name: Terraform
+
+on:
+  workflow_dispatch:
+    inputs:
+      do_apply:
+        description: 'apply? or not(destroy)'
+        required: true
+        type: boolean
+
+env:
+  TF_BACKEND_NAME            : ${{ vars.backend_name }}
+  TF_BACKEND_PREFIX          : ${{ vars.backend_prefix }}
+  TF_VAR_region              : ${{ vars.region }}
+  TF_VAR_bucket_name         : ${{ vars.bucket_bame }}
+
+jobs:
+  create_gce:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ env.TF_VAR_region }}
+          role-to-assume: ${{ secrets.AWS_IAM_ROLE }}
+
+      - uses: hashicorp/setup-terraform@v2
+      - run: terraform fmt -check -recursive
+        working-directory: bucket
+      - run: terraform init -backend-config="region=$TF_VAR_region" -backend-config="bucket=$TF_BACKEND_NAME" -backend-config="key=$TF_BACKEND_PREFIX"
+        working-directory: bucket
+      - run: terraform validate
+        working-directory: bucket
+      - run: terraform plan -no-color -lock-timeout=60m
+        working-directory: bucket
+
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/main' && (github.event_name == 'workflow_dispatch' && inputs.do_apply)
+        run: terraform apply -auto-approve -input=false
+        working-directory: bucket
+
+      - name: Terraform Destroy
+        if: github.ref == 'refs/heads/main' && (github.event_name == 'workflow_dispatch' && !inputs.do_apply)
+        run: terraform destroy -auto-approve -input=false
+        working-directory: bucket
+

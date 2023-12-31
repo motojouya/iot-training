@@ -9,3 +9,6 @@ https://qiita.com/rm0063vpedc15/items/e131cd902b51da5b47f1
 https://dev.classmethod.jp/articles/creating-a-glue-table-with-amazon-athena-partition-project-set-in-aws-cdk-v2/
 https://mazyu36.hatenablog.com/entry/2023/03/11/091614
 https://blog.serverworks.co.jp/cdk-typescript-handson
+
+https://qiita.com/to-fmak/items/0da7be74a2fecd3861c6  
+https://runble1.com/aws-terraform-waf-v2-kinesis-firehose-parquet-s3/  

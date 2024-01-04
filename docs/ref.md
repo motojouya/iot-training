@@ -5,10 +5,14 @@ https://docs.aws.amazon.com/ja_jp/greengrass/v1/developerguide/setup-filter.rpi.
 https://docs.aws.amazon.com/ja_jp/firehose/latest/dev/record-format-conversion.html  
 https://dev.classmethod.jp/articles/visualizing-multi-csv-files-on-s3-via-quicksight-and-athena/  
 
-https://qiita.com/rm0063vpedc15/items/e131cd902b51da5b47f1
-https://dev.classmethod.jp/articles/creating-a-glue-table-with-amazon-athena-partition-project-set-in-aws-cdk-v2/
-https://mazyu36.hatenablog.com/entry/2023/03/11/091614
-https://blog.serverworks.co.jp/cdk-typescript-handson
+https://qiita.com/rm0063vpedc15/items/e131cd902b51da5b47f1  
+https://dev.classmethod.jp/articles/creating-a-glue-table-with-amazon-athena-partition-project-set-in-aws-cdk-v2/  
+https://mazyu36.hatenablog.com/entry/2023/03/11/091614  
+https://blog.serverworks.co.jp/cdk-typescript-handson  
 
 https://qiita.com/to-fmak/items/0da7be74a2fecd3861c6  
 https://runble1.com/aws-terraform-waf-v2-kinesis-firehose-parquet-s3/  
+https://qiita.com/kobayashi-m42/items/6e61537a866c1ad69821  
+https://dev.classmethod.jp/articles/athena-query-save/  
+https://docs.aws.amazon.com/ja_jp/athena/latest/ug/querying.html  
+https://docs.aws.amazon.com/ja_jp/athena/latest/ug/encrypting-query-results-stored-in-s3.html  

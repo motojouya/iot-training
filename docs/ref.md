@@ -16,3 +16,5 @@ https://qiita.com/kobayashi-m42/items/6e61537a866c1ad69821
 https://dev.classmethod.jp/articles/athena-query-save/  
 https://docs.aws.amazon.com/ja_jp/athena/latest/ug/querying.html  
 https://docs.aws.amazon.com/ja_jp/athena/latest/ug/encrypting-query-results-stored-in-s3.html  
+
+https://docs.aws.amazon.com/ja_jp/athena/latest/ug/orc-serde.html  

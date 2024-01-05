@@ -18,6 +18,7 @@ resource "aws_glue_catalog_table" "home_air_table" {
     "projection.time.range"         = "${var.date_range_start},NOW"
     "storage.location.template"     = "s3://${var.data_bucket_name}${var.data_prefix}/$${time}"
     "classification"                = "orc"
+    "compressionType"               = "gzip"
   }
 
   storage_descriptor {

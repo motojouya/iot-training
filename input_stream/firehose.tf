@@ -1,15 +1,11 @@
 
-resource "aws_kinesis_firehose_delivery_stream" "extended_s3_stream" {
+resource "aws_kinesis_firehose_delivery_stream" "iot_to_s3_stream" {
   name        = "aws-waf-logs-terraform-kinesis-firehose"
   destination = "extended_s3"
 
   extended_s3_configuration {
-    role_arn   = aws_iam_role.firehose_role.arn
-    bucket_arn = aws_s3_bucket.bucket.arn
-
-    prefix = "WAFLOG/year=!{timestamp:yyyy}/month=!{timestamp:MM}/day=!{timestamp:dd}/hour=!{timestamp:HH}/"
-    error_output_prefix = "ERRORLOG/!{firehose:error-output-type}/year=!{timestamp:yyyy}/month=!{timestamp:MM}/day=!{timestamp:dd}/hour=!{timestamp:HH}/"
-
+    role_arn    = aws_iam_role.firehose_role.arn
+    bucket_arn  = aws_s3_bucket.bucket.arn
     buffer_size = 128
 
     data_format_conversion_configuration {
@@ -21,15 +17,15 @@ resource "aws_kinesis_firehose_delivery_stream" "extended_s3_stream" {
 
       output_format_configuration {
         serializer {
-          parquet_ser_de {}
+          orc_ser_de {}
         }
       }
 
       schema_configuration {
-        database_name = aws_glue_catalog_table.aws_glue_catalog_table.database_name
+        database_name = var.glue_catalog_database_name
         role_arn      = aws_iam_role.firehose_role.arn
-        table_name    = aws_glue_catalog_table.aws_glue_catalog_table.name
-        region        = "ap-northeast-1"
+        table_name    = var.glue_catalog_table_name
+        region        = var.region
       }
     }
   }
@@ -145,3 +141,48 @@ resource "aws_iam_role_policy_attachment" "firehose_iam" {
   role       = aws_iam_role.firehose_role.name
   policy_arn = aws_iam_policy.firehose_policy.arn
 }
+
+
+
+
+
+
+
+
+
+data "aws_iam_policy_document" "firehose_assume_role" {
+  statement {
+    effect = "Allow"
+
+    principals {
+      type        = "Service"
+      identifiers = ["firehose.amazonaws.com"]
+    }
+
+    actions = ["sts:AssumeRole"]
+  }
+}
+
+resource "aws_iam_role" "firehose_role" {
+  name               = "firehose_role"
+  assume_role_policy = data.aws_iam_policy_document.firehose_assume_role.json
+}
+
+data "aws_iam_policy_document" "lambda_assume_role" {
+  statement {
+    effect = "Allow"
+
+    principals {
+      type        = "Service"
+      identifiers = ["lambda.amazonaws.com"]
+    }
+
+    actions = ["sts:AssumeRole"]
+  }
+}
+
+resource "aws_iam_role" "lambda_iam" {
+  name               = "lambda_iam"
+  assume_role_policy = data.aws_iam_policy_document.lambda_assume_role.json
+}
+

@@ -1,6 +1,3 @@
-variable "region" {}
-variable "bucket_name" {}
-
 terraform {
   required_providers {
     aws = {
@@ -10,10 +7,7 @@ terraform {
   }
   backend "s3" {}
 }
+
 provider "aws" {
   region = var.region
-}
-
-resource "aws_s3_bucket" "iot_bucket" {
-  bucket = var.bucket_name
 }

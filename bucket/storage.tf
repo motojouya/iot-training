@@ -1,3 +1,6 @@
+resource "aws_s3_bucket" "iot_bucket" {
+  bucket = var.bucket_name
+}
 
 resource "aws_glue_catalog_database" "home_air_database" {
   name = var.glue_catalog_database_name
@@ -16,13 +19,13 @@ resource "aws_glue_catalog_table" "home_air_table" {
     "projection.time.interval"      = "1"
     "projection.time.interval.unit" = "DAYS"
     "projection.time.range"         = "${var.date_range_start},NOW"
-    "storage.location.template"     = "s3://${var.data_bucket_name}${var.data_prefix}/$${time}"
+    "storage.location.template"     = "s3://${var.bucket_name}${var.data_prefix}/$${time}"
     "classification"                = "orc"
     "compressionType"               = "gzip"
   }
 
   storage_descriptor {
-    location      = "s3://${var.data_bucket_name}${var.data_prefix}"
+    location      = "s3://${var.bucket_name}${var.data_prefix}"
     input_format  = "org.apache.hadoop.hive.ql.io.orc.OrcInputFormat"
     output_format = "org.apache.hadoop.hive.ql.io.orc.OrcOutputFormat"
     compressed = true

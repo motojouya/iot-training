@@ -28,7 +28,8 @@ resource "aws_glue_catalog_table" "home_air_table" {
     location      = "s3://${var.bucket_name}${var.data_prefix}"
     input_format  = "org.apache.hadoop.hive.ql.io.orc.OrcInputFormat"
     output_format = "org.apache.hadoop.hive.ql.io.orc.OrcOutputFormat"
-    compressed = true
+    compressed    = true
+
     ser_de_info {
       serialization_library = "org.apache.hadoop.hive.ql.io.orc.OrcSerde"
       parameters = {
@@ -39,10 +40,6 @@ resource "aws_glue_catalog_table" "home_air_table" {
     columns {
       name = "device"
       type = "string"
-    }
-    columns {
-      name = "time"
-      type = "timestamp"
     }
     columns {
       name = "temperature"

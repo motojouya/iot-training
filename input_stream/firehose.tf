@@ -19,8 +19,8 @@ data "aws_iam_policy_document" "firehose_policy_data" {
       "s3:PutObject"
     ]
     resources = [
-      "arn:aws:s3:::${var.bucket_name}",
-      "arn:aws:s3:::${var.bucket_name}/*"
+      "${var.bucket_arn}",
+      "${var.bucket_arn}/*"
     ]
   }
   statement {
@@ -94,8 +94,10 @@ resource "aws_kinesis_firehose_delivery_stream" "iot_to_s3_stream" {
   destination = "extended_s3"
 
   extended_s3_configuration {
-    role_arn    = aws_iam_role.firehose_role.arn
-    bucket_arn  = var.bucket_name
+    role_arn   = aws_iam_role.firehose_role.arn
+    bucket_arn = var.bucket_arn
+
+    buffering_size = 64
 
     data_format_conversion_configuration {
       input_format_configuration {

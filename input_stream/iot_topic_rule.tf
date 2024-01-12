@@ -24,7 +24,7 @@ resource "aws_iot_topic_rule" "iot_topic_rule" {
   name        = var.topic_rule
   enabled     = true
   sql         = "SELECT * FROM '${var.iot_topic}'"
-  sql_version = "2024-01-01"
+  sql_version = "2016-03-23"
 
   firehose {
     delivery_stream_name = aws_kinesis_firehose_delivery_stream.iot_to_s3_stream.name

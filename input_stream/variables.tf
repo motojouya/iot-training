@@ -3,7 +3,7 @@ variable "region" {}
 variable "account_id" {}
 
 # storage
-variable "bucket_name" {}
+variable "bucket_arn" {}
 variable "glue_catalog_database_name" {}
 variable "glue_catalog_table_name" {}
 

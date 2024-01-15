@@ -99,6 +99,13 @@ resource "aws_kinesis_firehose_delivery_stream" "iot_to_s3_stream" {
 
     buffering_size = 64
 
+    # TODO require error log?
+    # cloudwatch_logging_options {
+    #   enabled = true
+    #   log_group_name = ""
+    #   log_stream_name = ""
+    # }
+
     data_format_conversion_configuration {
       input_format_configuration {
         deserializer {

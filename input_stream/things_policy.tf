@@ -46,7 +46,7 @@ data "aws_iam_policy_document" "things_policy_doc" {
   }
 }
 
-resource "aws_iam_policy" "things_policy" {
+resource "aws_iot_policy" "things_policy" {
   name   = "iot_things_policy"
   policy = data.aws_iam_policy_document.things_policy_doc.json
 }

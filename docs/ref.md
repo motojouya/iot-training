@@ -18,3 +18,4 @@ https://docs.aws.amazon.com/ja_jp/athena/latest/ug/querying.html
 https://docs.aws.amazon.com/ja_jp/athena/latest/ug/encrypting-query-results-stored-in-s3.html  
 
 https://docs.aws.amazon.com/ja_jp/athena/latest/ug/orc-serde.html  
+https://qiita.com/bathtimefish/items/f27a3d3487c330902b00  

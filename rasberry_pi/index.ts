@@ -1,12 +1,8 @@
-/**
- * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
- * SPDX-License-Identifier: Apache-2.0.
- */
-
-import {mqtt5, iot} from "aws-iot-device-sdk-v2";
-import {ICrtError} from "aws-crt";
-import {once} from "events";
+import { mqtt5, iot } from "aws-iot-device-sdk-v2";
+import { ICrtError } from "aws-crt";
+import { once } from "events";
 import { toUtf8 } from '@aws-sdk/util-utf8-browser';
+import { scan } from './bluetooth';
 
 type Args = { [index: string]: any };
 
@@ -23,34 +19,42 @@ yargs.command('*', false, (yargs: any) => {
         alias: 'c',
         description: '<path>: File path to a PEM encoded certificate to use with mTLS.',
         type: 'string',
-        required: false
+        required: true
     })
     .option('key', {
         alias: 'k',
         description: '<path>: File path to a PEM encoded private key that matches cert.',
         type: 'string',
-        required: false
+        required: true
     })
-    .option('region', {
-        alias: 'r',
-        description: 'AWS region to establish a websocket connection to.  Only required if using websockets and a non-standard endpoint.',
+    .option('topic', {
+        alias: 't',
+        description: 'mac address of bluetooth device',
         type: 'string',
-        required: false
+        required: true
+    })
+    .option('device', {
+        alias: 'd',
+        description: 'mac address of bluetooth device',
+        type: 'string',
+        required: true
+    })
+    .option('macaddress', {
+        alias: 'm',
+        description: 'mac address of bluetooth device',
+        type: 'string',
+        required: true
     })
 }, main).parse();
 
 function creatClientConfig(args : any) : mqtt5.Mqtt5ClientConfig {
     let builder : iot.AwsIotMqtt5ClientConfigBuilder | undefined = undefined;
 
-    if (args.key && args.cert) {
-        builder = iot.AwsIotMqtt5ClientConfigBuilder.newDirectMqttBuilderWithMtlsFromPath(
-            args.endpoint,
-            args.cert,
-            args.key
-        );
-    } else {
-        // TODO error
-    }
+    builder = iot.AwsIotMqtt5ClientConfigBuilder.newDirectMqttBuilderWithMtlsFromPath(
+        args.endpoint,
+        args.cert,
+        args.key
+    );
 
     builder.withConnectProperties({
         keepAliveIntervalSeconds: 1200
@@ -108,52 +112,21 @@ function createClient(args: any) : mqtt5.Mqtt5Client {
     return client;
 }
 
-async function runSample(args : any) {
-
-    let client : mqtt5.Mqtt5Client = createClient(args);
+async function send(client : mqtt5.Mqtt5Client, topic, data) {
 
     const connectionSuccess = once(client, "connectionSuccess");
-
     client.start();
-
     await connectionSuccess;
 
-    const suback = await client.subscribe({
-        subscriptions: [
-            { qos: mqtt5.QoS.AtLeastOnce, topicFilter: "hello/world/qos1" },
-            { qos: mqtt5.QoS.AtMostOnce, topicFilter: "hello/world/qos0" }
-        ]
-    });
-    console.log('Suback result: ' + JSON.stringify(suback));
-
     const qos0PublishResult = await client.publish({
-        qos: mqtt5.QoS.AtMostOnce,
-        topicName: "hello/world/qos0",
-        payload: JSON.stringify("This is a qos 0 payload"),
-        userProperties: [
-            {name: "test", value: "userproperty"}
-        ]
+        qos: mqtt5.QoS.AtMostOnce, // mqtt5.QoS.AtLeastOnce
+        topicName: topic,
+        payload: JSON.stringify(data),
     });
     console.log('QoS 0 Publish result: ' + JSON.stringify(qos0PublishResult));
 
-    const qos1PublishResult = await client.publish({
-        qos: mqtt5.QoS.AtLeastOnce,
-        topicName: "hello/world/qos1",
-        payload: JSON.stringify("This is a qos 1 payload")
-    });
-    console.log('QoS 1 Publish result: ' + JSON.stringify(qos1PublishResult));
-
-    let unsuback = await client.unsubscribe({
-        topicFilters: [
-            "hello/world/qos1"
-        ]
-    });
-    console.log('Unsuback result: ' + JSON.stringify(unsuback));
-
     const stopped = once(client, "stopped");
-
     client.stop();
-
     await stopped;
 
     client.close();
@@ -162,11 +135,19 @@ async function runSample(args : any) {
 async function main(args : Args){
     // make it wait as long as possible once the promise completes we'll turn it off.
     const timer = setTimeout(() => {}, 2147483647);
+    let client : mqtt5.Mqtt5Client = createClient(args);
+    const deviceName = args.device;
+    const topic = args.topic;
 
-    await runSample(args);
-
-    clearTimeout(timer);
-
-    process.exit(0);
+    scan(args.macaddress, async (temperature, humidity, datetime) => {
+        const data = {
+          deviceName,
+          temperature,
+          humidity,
+          datetime,
+        };
+        await send(client, topic, data);
+        clearTimeout(timer);
+        process.exit(0);
+    });
 }
-

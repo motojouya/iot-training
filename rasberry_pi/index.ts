@@ -139,12 +139,12 @@ async function main(args : Args){
     const deviceName = args.device;
     const topic = args.topic;
 
-    scan(args.macaddress, async (temperature, humidity, datetime) => {
+    scan(args.macaddress, async (temperature: number, humidity: number, datetime: Date) => {
         const data = {
           deviceName,
           temperature,
           humidity,
-          datetime,
+          datetime: datetime.toISOString(),
         };
         await send(client, topic, data);
         clearTimeout(timer);

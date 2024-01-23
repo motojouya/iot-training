@@ -1,18 +1,23 @@
 {
-    "name": "pub-sub-mqtt5",
-    "version": "1.0.0",
-    "description": "NodeJS IoT SDK v2 MQTT5 Pub Sub Sample",
-    "main": "./dist/index.js",
-    "scripts": {
-        "tsc": "tsc",
-        "prepare": "npm run tsc"
-    },
-    "devDependencies": {
-        "@types/node": "^10.17.50",
-        "typescript": "^4.7.4"
-    },
-    "dependencies": {
-        "aws-iot-device-sdk-v2": "file:../../..",
-        "yargs": "^16.2.0"
-    }
+  "name": "home-air",
+  "version": "1.0.0",
+  "description": "NodeJS IoT SDK v2 MQTT5 Pub Sub Sample",
+  "main": "./dist/index.js",
+  "scripts": {
+    "tsc": "tsc",
+    "prepare": "npm run tsc"
+  },
+  "devDependencies": {
+    "@types/node": "^10.17.60",
+    "ts-node": "^10.9.2",
+    "typescript": "^4.9.5"
+  },
+  "dependencies": {
+    "@abandonware/noble": "^1.9.2-23",
+    "@types/noble": "^0.0.44",
+    "aws-iot-device-sdk-v2": "file:../../..",
+    "yargs": "^16.2.0"
+  },
+  "author": "Takuya Sugiyama (motojouya)",
+  "license": "MIT"
 }

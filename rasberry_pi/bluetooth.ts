@@ -26,11 +26,11 @@ export const scan = (macAddress: string, send: Send) => {
       const manufacturerData: Buffer = advertisement.manufacturerData
 
       if (macAddress.toLowerCase() == address.toLowerCase() && manufacturerData !== undefined) {
-          const temperature = manufacturerData.readInt16LE(0) / 100
-          const humidity = manufacturerData.readInt16LE(2) / 100
-          const battery = manufacturerData[7]
-          const datetime = new Date().toISOString()
-          console.log(`temperature: ${temperature}, humidity: ${humidity}, battery: ${battery}, datetime: ${datetime}`)
+          const temperature = manufacturerData.readInt16LE(0) / 100;
+          const humidity = manufacturerData.readInt16LE(2) / 100;
+          const battery = manufacturerData[7];
+          const datetime = new Date();
+          console.log(`temperature: ${temperature}, humidity: ${humidity}, battery: ${battery}, datetime: ${datetime.toISOString()}`)
 
           try {
               await send(temperature, humidity, datetime);

@@ -5,7 +5,9 @@ import { Peripheral, Advertisement } from 'noble'
 // const INTERVAL = 1000 * 60 * 30
 const noble = require('@abandonware/noble')
 
-export const scan = (macAddress, send) => {
+type Send = (temperature: number, humidity: number, datetime: Date) => void;
+
+export const scan = (macAddress: string, send: Send) => {
   noble.on('scanStart', () => { console.log('scanStart'); });
   noble.on('scanStop', () => { console.log('scanStop'); });
   noble.on('stateChange', (state: string) => {

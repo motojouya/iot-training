@@ -133,3 +133,6 @@ dist
 .terraform/
 *.tfvars
 *.tfstate
+
+# others
+certs/

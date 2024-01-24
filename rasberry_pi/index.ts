@@ -112,7 +112,7 @@ function createClient(args: any) : mqtt5.Mqtt5Client {
     return client;
 }
 
-async function send(client : mqtt5.Mqtt5Client, topic, data) {
+async function send(client : mqtt5.Mqtt5Client, topic: string, data: object) {
 
     const connectionSuccess = once(client, "connectionSuccess");
     client.start();
@@ -139,12 +139,12 @@ async function main(args : Args){
     const deviceName = args.device;
     const topic = args.topic;
 
-    scan(args.macaddress, async (temperature, humidity, datetime) => {
+    scan(args.macaddress, async (temperature: number, humidity: number, datetime: Date) => {
         const data = {
-          deviceName,
+          device: deviceName,
           temperature,
           humidity,
-          datetime,
+          time: datetime.toISOString(),
         };
         await send(client, topic, data);
         clearTimeout(timer);

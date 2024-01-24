@@ -5,7 +5,8 @@
   "main": "./dist/index.js",
   "scripts": {
     "tsc": "tsc",
-    "prepare": "npm run tsc"
+    "prepare": "npm run tsc",
+    "exec": "sudo npx ts-node index.ts"
   },
   "devDependencies": {
     "@types/node": "^10.17.60",
@@ -14,8 +15,10 @@
   },
   "dependencies": {
     "@abandonware/noble": "^1.9.2-23",
+    "@aws-sdk/util-utf8-browser": "^3.259.0",
     "@types/noble": "^0.0.44",
-    "aws-iot-device-sdk-v2": "file:../../..",
+    "aws-crt": "^1.21.0",
+    "aws-iot-device-sdk-v2": "^1.19.0",
     "yargs": "^16.2.0"
   },
   "author": "Takuya Sugiyama (motojouya)",

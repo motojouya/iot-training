@@ -19,3 +19,9 @@ https://docs.aws.amazon.com/ja_jp/athena/latest/ug/encrypting-query-results-stor
 
 https://docs.aws.amazon.com/ja_jp/athena/latest/ug/orc-serde.html  
 https://qiita.com/bathtimefish/items/f27a3d3487c330902b00  
+
+https://docs.aws.amazon.com/ja_jp/athena/latest/ug/partitions.html  
+https://docs.aws.amazon.com/ja_jp/athena/latest/ug/partition-projection-kinesis-firehose-example.html  
+https://qiita.com/sugimount-a/items/edd136364a8e0d6cb725  
+https://dev.classmethod.jp/articles/try-dinamic-partitioning-of-firehose/  
+https://qiita.com/itsuki3/items/84778d7e436dac618f02  

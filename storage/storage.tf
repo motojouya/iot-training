@@ -13,15 +13,16 @@ resource "aws_glue_catalog_table" "home_air_table" {
   table_type = "EXTERNAL_TABLE"
 
   parameters = {
-    "projection.enabled"            = "true"
-    "projection.time.format"        = "yyyy/MM/dd"
-    "projection.time.type"          = "date"
-    "projection.time.interval"      = "1"
-    "projection.time.interval.unit" = "DAYS"
-    "projection.time.range"         = "${var.date_range_start},NOW"
-    "storage.location.template"     = "s3://${var.bucket_name}${var.data_prefix}/$${time}"
-    "classification"                = "orc"
-    "compressionType"               = "gzip"
+    "projection.enabled"                = "true"
+    "projection.datehour.type"          = "date"
+    "projection.datehour.format"        = "yyyy/MM/dd/HH"
+    "projection.datehour.range"         = "2021/01/01/00,NOW"
+    "projection.datehour.interval"      = "1"
+    "projection.datehour.interval.unit" = "HOURS"
+    # "storage.location.template"         = "s3://${var.bucket_name}${var.data_prefix}/$${datehour}/"
+    "storage.location.template"         = "s3://${var.bucket_name}/$${datehour}/"
+    "classification"                    = "orc"
+    "compressionType"                   = "gzip"
   }
 
   storage_descriptor {
@@ -42,6 +43,10 @@ resource "aws_glue_catalog_table" "home_air_table" {
       type = "string"
     }
     columns {
+      name = "time"
+      type = "float"
+    }
+    columns {
       name = "temperature"
       type = "float"
     }
@@ -52,7 +57,7 @@ resource "aws_glue_catalog_table" "home_air_table" {
   }
 
   partition_keys {
-    name = "time"
-    type = "timestamp"
+    name = "datehour"
+    type = "string"
   }
 }

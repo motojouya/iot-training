@@ -19,6 +19,7 @@ resource "aws_glue_catalog_table" "home_air_table" {
     "projection.datehour.range"         = "2021/01/01/00,NOW"
     "projection.datehour.interval"      = "1"
     "projection.datehour.interval.unit" = "HOURS"
+    # need change partition for firehose dynamic partioning
     # "storage.location.template"         = "s3://${var.bucket_name}${var.data_prefix}/$${datehour}/"
     "storage.location.template"         = "s3://${var.bucket_name}/$${datehour}/"
     "classification"                    = "orc"

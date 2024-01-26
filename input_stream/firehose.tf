@@ -99,6 +99,17 @@ resource "aws_kinesis_firehose_delivery_stream" "iot_to_s3_stream" {
 
     buffering_size = 64
 
+    # need dynamic partitioning for time diff between UTC and JST
+    # dynamic_partitioning_configuration {
+    #   enabled = "true"
+    # }
+    # Example prefix using partitionKeyFromQuery, applicable to JQ processor
+    # .date | strptime("%Y-%m-%dT%H:%M:%S.") | strftime("%Y")
+    # .date | strptime("%Y-%m-%dT%H:%M:%S.") | strftime("%Y")
+    # .date | strptime("%Y-%m-%dT%H:%M:%S.") | strftime("%Y")
+    # prefix              = "data/store_id=!{partitionKeyFromQuery:time}/customer_id=!{partitionKeyFromQuery:customer_id}/year=!{timestamp:yyyy}/month=!{timestamp:MM}/day=!{timestamp:dd}/hour=!{timestamp:HH}/"
+    # error_output_prefix = "errors/year=!{timestamp:yyyy}/month=!{timestamp:MM}/day=!{timestamp:dd}/hour=!{timestamp:HH}/!{firehose:error-output-type}/"
+
     # TODO require error log?
     # cloudwatch_logging_options {
     #   enabled = true
